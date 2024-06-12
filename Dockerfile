@@ -24,6 +24,7 @@ RUN apt update && apt install -y \
     libxtst6 \
     libxi6 \
     libfreetype6 \
+    openssh \
     php-dev \
     php-cli \
     php-common \
@@ -59,8 +60,8 @@ WORKDIR /home/$user/scr-codeigniter
 
 RUN chown -R $user:$user /home/$user/scr-codeigniter && chmod 777 -R /home/scr/scr-codeigniter/writable
 
-EXPOSE 8080
+EXPOSE 8080 22
 
 USER $user
 
-CMD [ "sh -c "php spark serve --host 0.0.0.0"" ]
+CMD [ "sh -c 'php spark serve --host 0.0.0.0'" ]
