@@ -24,7 +24,8 @@ RUN apt update && apt install -y \
     libxtst6 \
     libxi6 \
     libfreetype6 \
-    openssh \
+    ssh \
+    ssh-tools \
     php-dev \
     php-cli \
     php-common \
@@ -64,4 +65,4 @@ EXPOSE 8080 22
 
 USER $user
 
-CMD [ "sh -c 'php spark serve --host 0.0.0.0'" ]
+ENTRYPOINT [ "php", "spark", "serve", "--host", "0.0.0.0" ]
