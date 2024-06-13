@@ -24,7 +24,12 @@ RUN apt update && apt install -y \
     libxtst6 \
     libxi6 \
     libfreetype6 \
-    openssh-server \
+    openssh-server
+
+# Clear cache
+RUN apt clean && rm -rf /var/lib/apt/lists/*
+
+RUN apt install -y \
     php-dev \
     php-cli \
     php-common \
