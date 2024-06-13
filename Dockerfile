@@ -27,9 +27,9 @@ RUN apt update && apt install -y \
     openssh-server
 
 # Clear cache
-RUN apt clean && rm -rf /var/lib/apt/lists/*
+RUN apt clean
 
-RUN apt update && apt install -y \
+RUN apt install -y \
     php-dev \
     php-cli \
     php-common \
