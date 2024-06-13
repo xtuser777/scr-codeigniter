@@ -29,7 +29,7 @@ RUN apt update && apt install -y \
 # Clear cache
 RUN apt clean && rm -rf /var/lib/apt/lists/*
 
-RUN apt install -y \
+RUN apt update && apt install -y \
     php-dev \
     php-cli \
     php-common \
