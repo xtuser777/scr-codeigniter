@@ -24,8 +24,7 @@ RUN apt update && apt install -y \
     libxtst6 \
     libxi6 \
     libfreetype6 \
-    ssh \
-    ssh-tools \
+    openssh-server \
     php-dev \
     php-cli \
     php-common \
@@ -49,7 +48,10 @@ RUN apt clean && rm -rf /var/lib/apt/lists/*
 # Create system user to run Composer and Artisan Commands
 RUN useradd -G www-data,root,sudo -u $uid -m -d /home/$user $user
 RUN chown -R $user:$user /home/$user && \
-    mkdir /home/$user/scr-codeigniter
+    mkdir /home/$user/scr-codeigniter && \
+    chown -R $user:$user /home/$user/scr-codeigniter
+
+RUN echo "scr:scr123" | chpasswd
 
 COPY . /home/$user/scr-codeigniter
 
@@ -59,10 +61,10 @@ WORKDIR /home/$user/scr-codeigniter
 # Copy custom configurations PHP
 # COPY .docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 
-RUN chown -R $user:$user /home/$user/scr-codeigniter && chmod 777 -R /home/scr/scr-codeigniter/writable
+RUN chmod 777 -R /home/scr/scr-codeigniter/writable
 
 EXPOSE 8080 22
 
 USER $user
 
-ENTRYPOINT [ "php", "spark", "serve", "--host", "0.0.0.0" ]
+ENTRYPOINT service ssh start && php spark serve --host 0.0.0.0
