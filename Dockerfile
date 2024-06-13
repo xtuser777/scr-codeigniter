@@ -51,12 +51,12 @@ RUN apt install -y \
 RUN apt clean && rm -rf /var/lib/apt/lists/*
 
 # Create system user to run Composer and Artisan Commands
-RUN useradd -G www-data,root,sudo -u $uid -m -d /home/$user $user
-RUN chown -R $user:$user /home/$user && \
-    mkdir /home/$user/scr-codeigniter && \
-    chown -R $user:$user /home/$user/scr-codeigniter
-
+RUN useradd -G users,sudo -u $uid -m $user
 RUN echo "scr:scr123" | chpasswd
+
+USER $user
+
+RUN mkdir /home/$user/scr-codeigniter 
 
 COPY . /home/$user/scr-codeigniter
 
@@ -70,6 +70,4 @@ RUN chmod 777 -R /home/scr/scr-codeigniter/writable
 
 EXPOSE 8080 22
 
-USER $user
-
-ENTRYPOINT service ssh start && php spark serve --host 0.0.0.0
+ENTRYPOINT service ssh start && bash

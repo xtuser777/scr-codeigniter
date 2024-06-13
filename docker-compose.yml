@@ -32,19 +32,6 @@ services:
       networks:
         - scr-codeigniter-network
 
-    phpmyadmin:
-      image: phpmyadmin/phpmyadmin
-      container_name: phpmyadmin
-      links:
-        - mysql
-      restart: always
-      environment:
-        - PMA_ARBITRARY=1
-      ports:
-        - 8899:80
-      networks:
-        - scr-codeigniter-network
-
 networks:
   scr-codeigniter-network:
     driver: bridge
